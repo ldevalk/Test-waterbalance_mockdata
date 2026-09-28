@@ -1,0 +1,818 @@
+{
+  "uid": "waterbalans-kalmthout-mock",
+  "title": "Waterbalans Kalmthoutse Heide (mock-up)",
+  "tags": [
+    "waterbalans",
+    "mock",
+    "Kalmthoutse Heide",
+    "SYMPHONICA"
+  ],
+  "timezone": "browser",
+  "editable": true,
+  "graphTooltip": 1,
+  "schemaVersion": 39,
+  "time": {
+    "from": "2026-07-30T00:00:00.000Z",
+    "to": "2026-10-08T00:00:00.000Z"
+  },
+  "refresh": "",
+  "templating": {
+    "list": [
+      {
+        "name": "ds",
+        "label": "Databron",
+        "type": "datasource",
+        "query": "yesoreyeram-infinity-datasource",
+        "hide": 0
+      },
+      {
+        "name": "data_url",
+        "label": "Data-URL",
+        "type": "textbox",
+        "query": "https://raw.githubusercontent.com/ldevalk/Test-waterbalance_mockdata/main/waterbalans_kalmthoutse_heide_mock.json",
+        "current": {
+          "text": "https://raw.githubusercontent.com/ldevalk/Test-waterbalance_mockdata/main/waterbalans_kalmthoutse_heide_mock.json",
+          "value": "https://raw.githubusercontent.com/ldevalk/Test-waterbalance_mockdata/main/waterbalans_kalmthoutse_heide_mock.json"
+        },
+        "hide": 0
+      },
+      {
+        "name": "gebied",
+        "label": "Gebied(en)",
+        "type": "custom",
+        "query": "Hele Grenspark : Hele Grenspark,België (alle deelgebieden) : België,Nederland (alle deelgebieden) : Nederland,BE · Stappersven / Nol : BE-Stappersven,BE · Centrale heide en vennen : BE-CentraleHeide,BE · Bovenloop Kleine Aa : BE-KleineAa,NL · De Groote Meer : NL-GrooteMeer,NL · Ossendrecht / Brabantse Wal : NL-Ossendrecht,NL · Huijbergen / De Zoom : NL-Huijbergen",
+        "multi": true,
+        "includeAll": false,
+        "current": {
+          "text": [
+            "Hele Grenspark"
+          ],
+          "value": [
+            "Hele Grenspark"
+          ]
+        },
+        "options": [
+          {
+            "text": "Hele Grenspark",
+            "value": "Hele Grenspark",
+            "selected": true
+          },
+          {
+            "text": "België (alle deelgebieden)",
+            "value": "België",
+            "selected": false
+          },
+          {
+            "text": "Nederland (alle deelgebieden)",
+            "value": "Nederland",
+            "selected": false
+          },
+          {
+            "text": "BE · Stappersven / Nol",
+            "value": "BE-Stappersven",
+            "selected": false
+          },
+          {
+            "text": "BE · Centrale heide en vennen",
+            "value": "BE-CentraleHeide",
+            "selected": false
+          },
+          {
+            "text": "BE · Bovenloop Kleine Aa",
+            "value": "BE-KleineAa",
+            "selected": false
+          },
+          {
+            "text": "NL · De Groote Meer",
+            "value": "NL-GrooteMeer",
+            "selected": false
+          },
+          {
+            "text": "NL · Ossendrecht / Brabantse Wal",
+            "value": "NL-Ossendrecht",
+            "selected": false
+          },
+          {
+            "text": "NL · Huijbergen / De Zoom",
+            "value": "NL-Huijbergen",
+            "selected": false
+          }
+        ],
+        "hide": 0
+      },
+      {
+        "name": "eenheid",
+        "label": "Eenheid",
+        "type": "custom",
+        "query": "m³/dag,mm/dag",
+        "multi": false,
+        "includeAll": false,
+        "current": {
+          "text": "m³/dag",
+          "value": "m³/dag"
+        },
+        "options": [
+          {
+            "text": "m³/dag",
+            "value": "m³/dag",
+            "selected": true
+          },
+          {
+            "text": "mm/dag",
+            "value": "mm/dag",
+            "selected": false
+          }
+        ],
+        "hide": 0
+      }
+    ]
+  },
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      },
+      {
+        "name": "Verwachting",
+        "datasource": {
+          "type": "yesoreyeram-infinity-datasource",
+          "uid": "${ds}"
+        },
+        "enable": true,
+        "hide": false,
+        "iconColor": "#808080",
+        "mappings": {
+          "time": {
+            "source": "field",
+            "value": "time"
+          },
+          "timeEnd": {
+            "source": "field",
+            "value": "timeEnd"
+          },
+          "text": {
+            "source": "field",
+            "value": "text"
+          }
+        },
+        "target": {
+          "refId": "Anno",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${ds}"
+          },
+          "type": "json",
+          "source": "url",
+          "url": "${data_url}",
+          "url_options": {
+            "method": "GET",
+            "data": ""
+          },
+          "parser": "backend",
+          "root_selector": "[{ \"time\": meta.t0, \"timeEnd\": $max(data.t), \"text\": \"Verwachting\" }]",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "time",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "timeEnd",
+              "text": "timeEnd",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "text",
+              "text": "text",
+              "type": "string"
+            }
+          ],
+          "filters": [],
+          "format": "table"
+        }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**MOCK-UP · fictieve, indicatieve data (deelgebieden en debieten zijn nog niet de echte).** Kies het hele Grenspark, één land of losse deelgebieden. Elke stroom heeft een *van* en een *naar*; hij telt mee als precies één kant binnen je selectie ligt (**+** instroom, **−** uitstroom). Uitwisseling tussen twee geselecteerde deelgebieden valt weg (zie de tabel rechtsonder). Kies **mm/dag** om gebieden van verschillende grootte te vergelijken."
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Waterbalans Kalmthoutse Heide – ${gebied:text} [${eenheid}]",
+      "description": "Positief = instroom in de selectie, negatief = uitstroom. Stromen tussen twee geselecteerde gebieden vallen weg. Grijze band = verwachting. Netto = bergingsverandering.",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${ds}"
+          },
+          "type": "json",
+          "source": "url",
+          "url": "${data_url}",
+          "url_options": {
+            "method": "GET",
+            "data": ""
+          },
+          "parser": "backend",
+          "root_selector": "(\n  /* Selectie: losse deelgebieden, een land (\"België\"/\"Nederland\") of \"Hele Grenspark\" */\n  $keuze := [${gebied:doublequote}];\n  $sel := gebieden[(id in $keuze) or (land in $keuze) or (\"Hele Grenspark\" in $keuze)].id;\n\n  /* Eenheid: m3/dag, of mm/dag over het oppervlak van de selectie */\n  $factor := \"${eenheid}\" = \"mm/dag\" ? 1000 / ($sum(gebieden[id in $sel].opp_ha) * 10000) : 1;\n\n  /* Randstromen: precies één kant ligt binnen de selectie. Stromen tussen twee geselecteerde gebieden vallen weg. */\n  $rand := stromen[(van in $sel) != (naar in $sel)];\n\n  /* Teken: +1 als het water de selectie in stroomt, -1 als het eruit gaat */\n  $info := $merge($rand.{ id: { \"post\": post, \"volgorde\": volgorde, \"teken\": (naar in $sel) ? 1 : -1 } });\n\n  $rij := data[t >= ${__from} and t <= ${__to} and $exists($lookup($info, id))].{\n    \"tijd\": t,\n    \"post\": $lookup($info, id).post & \"|\" & $string($lookup($info, id).volgorde),\n    \"q\": q * $lookup($info, id).teken * $factor\n  };\n\n  /* Optellen per post per dag (bv. neerslag van alle geselecteerde gebieden) + netto */\n  $posten := $rij{ post & \"|\" & $string(tijd): $sum(q) };\n  $netto  := $rij{ $string(tijd): $sum(q) };\n\n  /* Vaste volgorde: Infinity (Go) geeft gegroepeerde resultaten in willekeurige volgorde terug */\n  $uit := $append(\n    $each($posten, function($v, $k) { (\n      $d := $split($k, \"|\");\n      { \"post\": $d[0], \"volgorde\": $number($d[1]), \"tijd\": $number($d[2]), \"q\": $round($v, 3) }\n    ) }),\n    $each($netto, function($v, $k) { { \"post\": \"Netto (bergingsverandering)\", \"volgorde\": 999, \"tijd\": $number($k), \"q\": $round($v, 3) } })\n  );\n  $sort($uit, function($a, $b) { $a.volgorde > $b.volgorde or ($a.volgorde = $b.volgorde and $a.tijd > $b.tijd) })\n)",
+          "columns": [
+            {
+              "selector": "tijd",
+              "text": "tijd",
+              "type": "timestamp_epoch"
+            },
+            {
+              "selector": "post",
+              "text": "post",
+              "type": "string"
+            },
+            {
+              "selector": "q",
+              "text": "q",
+              "type": "number"
+            }
+          ],
+          "filters": [],
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "post"
+            ],
+            "keepFields": false,
+            "naming": {
+              "asLabels": true
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "displayName": "${__field.labels.post}",
+          "unit": "short",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "bars",
+            "barAlignment": 0,
+            "barWidthFactor": 0.8,
+            "fillOpacity": 85,
+            "lineWidth": 1,
+            "gradientMode": "none",
+            "showPoints": "never",
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            },
+            "axisLabel": "Debiet [${eenheid}]",
+            "axisPlacement": "auto",
+            "spanNulls": false,
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Neerslag"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#2a78d6"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Verdamping"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#eb6834"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Wegzijging (diep grondwater)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#4a3aa7"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Uittreding voet Brabantse Wal"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8a7fd6"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Drinkwaterwinning (Evides)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#e34948"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Afvoer Kleine Aa"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#1baf7a"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Drainage landbouw (randzone)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#9a9a9a"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Afvoer Nol / Vaart Nol-Roosendaal"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#eda100"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Afvoer richting Zoom"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#008300"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Watertransportleiding Nol → Groote Meer"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#e87ba4"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Centrale heide ⇄ Stappersven"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#f5cf73"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Centrale heide ⇄ Kleine Aa"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8fdcbf"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Grondwater BE → NL (Ossendrecht)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#b8b0ea"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Grondwater BE → NL (Huijbergen)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#7fc47f"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Huijbergen ⇄ Groote Meer"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#f3b6cd"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Netto (bergingsverandering)"
+            },
+            "properties": [
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "mode": "none",
+                  "group": "B"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 2
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "text"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "mean",
+            "min",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "barchart",
+      "title": "Totaal per post in de gekozen periode",
+      "description": "Som van de dagwaarden: in m³ (bij m³/dag) of in mm (bij mm/dag). Netto = bergingsverandering van de selectie.",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 17
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${ds}"
+          },
+          "type": "json",
+          "source": "url",
+          "url": "${data_url}",
+          "url_options": {
+            "method": "GET",
+            "data": ""
+          },
+          "parser": "backend",
+          "root_selector": "(\n  $keuze := [${gebied:doublequote}];\n  $sel := gebieden[(id in $keuze) or (land in $keuze) or (\"Hele Grenspark\" in $keuze)].id;\n  $factor := \"${eenheid}\" = \"mm/dag\" ? 1000 / ($sum(gebieden[id in $sel].opp_ha) * 10000) : 1;\n  $rand := stromen[(van in $sel) != (naar in $sel)];\n  $info := $merge($rand.{ id: { \"post\": post, \"teken\": (naar in $sel) ? 1 : -1 } });\n  $rij := data[t >= ${__from} and t <= ${__to} and $exists($lookup($info, id))].{\n    \"post\": $lookup($info, id).post,\n    \"q\": q * $lookup($info, id).teken * $factor\n  };\n  /* dagwaarden optellen: m3/dag -> m3, of mm/dag -> mm */\n  $vol := $rij{ post & \"\": $sum(q) };\n  $posten := $each($vol, function($v, $k) { { \"post\": $k, \"volume\": $round($v, 1) } });\n  $totaal := $sum($posten.volume);\n  $append(\n    $sort($posten, function($a, $b) { $a.volume < $b.volume }),\n    [{ \"post\": \"Netto (bergingsverandering)\", \"volume\": $round($totaal, 1) }]\n  )\n)",
+          "columns": [
+            {
+              "selector": "post",
+              "text": "Post",
+              "type": "string"
+            },
+            {
+              "selector": "volume",
+              "text": "Volume",
+              "type": "number"
+            }
+          ],
+          "filters": [],
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#eb6834",
+                "value": null
+              },
+              {
+                "color": "#2a78d6",
+                "value": 0
+              }
+            ]
+          },
+          "custom": {
+            "fillOpacity": 85,
+            "lineWidth": 0,
+            "gradientMode": "none",
+            "axisCenteredZero": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "xField": "Post",
+        "showValue": "always",
+        "barWidth": 0.7,
+        "groupWidth": 0.7,
+        "legend": {
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "table",
+      "title": "Welke stromen tellen mee?",
+      "description": "Alle stromen die een geselecteerd gebied raken. 'Intern' = tussen twee geselecteerde gebieden, telt niet mee.",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "${ds}"
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 17
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "${ds}"
+          },
+          "type": "json",
+          "source": "url",
+          "url": "${data_url}",
+          "url_options": {
+            "method": "GET",
+            "data": ""
+          },
+          "parser": "backend",
+          "root_selector": "(\n  $keuze := [${gebied:doublequote}];\n  $sel := gebieden[(id in $keuze) or (land in $keuze) or (\"Hele Grenspark\" in $keuze)].id;\n  stromen[(van in $sel) or (naar in $sel)].{\n    \"Telt mee als\": (van in $sel) and (naar in $sel) ? \"Intern (valt weg)\" : ((naar in $sel) ? \"Instroom (+)\" : \"Uitstroom (−)\"),\n    \"Post\": post,\n    \"Kunstwerk / term\": naam,\n    \"Van\": van,\n    \"Naar\": naar\n  }^(`Telt mee als`, Post)\n)",
+          "columns": [
+            {
+              "selector": "Telt mee als",
+              "text": "Telt mee als",
+              "type": "string"
+            },
+            {
+              "selector": "Post",
+              "text": "Post",
+              "type": "string"
+            },
+            {
+              "selector": "Kunstwerk / term",
+              "text": "Kunstwerk / term",
+              "type": "string"
+            },
+            {
+              "selector": "Van",
+              "text": "Van",
+              "type": "string"
+            },
+            {
+              "selector": "Naar",
+              "text": "Naar",
+              "type": "string"
+            }
+          ],
+          "filters": [],
+          "format": "table"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Telt mee als"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 150
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "Instroom (+)": {
+                        "color": "#2a78d6",
+                        "index": 0
+                      },
+                      "Uitstroom (−)": {
+                        "color": "#eb6834",
+                        "index": 1
+                      },
+                      "Intern (valt weg)": {
+                        "color": "#8c8c8c",
+                        "index": 2
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "Telt mee als": 0,
+              "Post": 1,
+              "Kunstwerk / term": 2,
+              "Van": 3,
+              "Naar": 4
+            },
+            "excludeByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      }
+    }
+  ]
+}
